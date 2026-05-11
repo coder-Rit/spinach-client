@@ -1,0 +1,113 @@
+/* google font */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --app-bg: #0a0a0a;
+  --app-text: #f5f5f5;
+  --surface-950: #0a0a0a;
+  --surface-900: #171717;
+  --surface-800: #262626;
+  --surface-700: #404040;
+  --surface-600: #525252;
+  --surface-500: #737373;
+  --surface-400: #a3a3a3;
+  --surface-300: #d4d4d4;
+  --surface-200: #e5e5e5;
+  --surface-100: #f5f5f5;
+  --surface-050: #fafafa;
+  --border-main: #404040;
+  --shadow-main: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+html[data-theme="light"] {
+  --app-bg: #f8f8f8;
+  --app-text: #111111;
+  --surface-950: #ffffff;
+  --surface-900: #f5f5f5;
+  --surface-800: #eeeeee;
+  --surface-700: #d4d4d4;
+  --surface-600: #bdbdbd;
+  --surface-500: #737373;
+  --surface-400: #525252;
+  --surface-300: #404040;
+  --surface-200: #2b2b2b;
+  --surface-100: #171717;
+  --surface-050: #111111;
+  --border-main: #d4d4d4;
+  --shadow-main: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+body {
+  background: var(--app-bg);
+  color: var(--app-text);
+  font-family: "Inter", sans-serif;
+}
+
+/* Theme token mapping for existing utility classes */
+.bg-neutral-950 {
+  background-color: var(--surface-950) !important;
+}
+.bg-neutral-900 {
+  background-color: var(--surface-900) !important;
+}
+.bg-neutral-800 {
+  background-color: var(--surface-800) !important;
+}
+.bg-neutral-700 {
+  background-color: var(--surface-700) !important;
+}
+.bg-neutral-600 {
+  background-color: var(--surface-600) !important;
+}
+.bg-neutral-200 {
+  background-color: var(--surface-200) !important;
+}
+.bg-white {
+  background-color: var(--surface-100) !important;
+}
+.text-neutral-100 {
+  color: var(--surface-100) !important;
+}
+.text-neutral-200 {
+  color: var(--surface-200) !important;
+}
+.text-neutral-300 {
+  color: var(--surface-300) !important;
+}
+.text-neutral-400 {
+  color: var(--surface-400) !important;
+}
+.text-neutral-500 {
+  color: var(--surface-500) !important;
+}
+.text-neutral-900 {
+  color: var(--surface-900) !important;
+}
+.text-white {
+  color: var(--surface-100) !important;
+}
+.border-neutral-700 {
+  border-color: var(--border-main) !important;
+}
+.border-neutral-600 {
+  border-color: var(--border-main) !important;
+}
+.border-neutral-500 {
+  border-color: var(--border-main) !important;
+}
+.hover\:bg-neutral-200:hover {
+  background-color: var(--surface-200) !important;
+}
+.hover\:bg-white:hover {
+  background-color: var(--surface-100) !important;
+}
+.focus\:border-white:focus {
+  border-color: var(--surface-100) !important;
+}
+.shadow-xl {
+  box-shadow: var(--shadow-main) !important;
+}
