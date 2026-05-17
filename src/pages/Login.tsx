@@ -1,5 +1,7 @@
 import { FormEvent, useState } from "react";
+import { Link } from "react-router-dom";
 import { useLogin } from "../hooks/useLogin";
+import DemoUserLoginButton from "../components/DemoUserLoginButton";
 import { Lock, Mail } from "lucide-react";
 
 const Login = () => {
@@ -20,7 +22,7 @@ const Login = () => {
         <label htmlFor="email" className="cursor-pointer hover:text-white duration-300">
           <span className="inline-flex items-center gap-2">
             <Mail size={14} />
-          Email Address
+            Email Address
           </span>
         </label>
         <input
@@ -37,7 +39,7 @@ const Login = () => {
         <label htmlFor="password" className="cursor-pointer hover:text-white duration-300">
           <span className="inline-flex items-center gap-2">
             <Lock size={14} />
-          Password
+            Password
           </span>
         </label>
 
@@ -58,6 +60,24 @@ const Login = () => {
       >
         Log In
       </button>
+
+      <div className="relative my-2">
+        <div className="absolute inset-0 flex items-center" aria-hidden>
+          <div className="w-full border-t border-neutral-700" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase tracking-wide">
+          <span className="bg-neutral-950 px-3 text-neutral-500">or</span>
+        </div>
+      </div>
+
+      <DemoUserLoginButton onLogin={login} loading={loading} showError={false} />
+
+      <p className="text-center text-sm text-neutral-500">
+        No account?{" "}
+        <Link to="/signup" className="text-emerald-500 hover:text-emerald-400">
+          Sign up
+        </Link>
+      </p>
 
       {error && (
         <p className="bg-neutral-800 rounded-lg p-5 text-neutral-200 border border-neutral-600">{error}</p>

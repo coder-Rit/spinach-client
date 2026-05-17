@@ -1,5 +1,6 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { Sprout, LogOut, MessageSquare, LayoutDashboard, Moon, Sun } from "lucide-react";
+import { LogOut, LayoutDashboard, Moon, Sun } from "lucide-react";
+import SpinachLogo from "./SpinachLogo";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useLogout } from "../hooks/useLogout";
 import { useTheme } from "../context/ThemeContext";
@@ -32,7 +33,6 @@ const Navbar = () => {
       className="inline-flex items-center gap-2 rounded-lg border border-neutral-600 bg-neutral-800/80 px-3 py-2 text-sm text-neutral-200 hover:border-emerald-600/50 hover:bg-neutral-800"
     >
       {mode === "dark" ? <Sun size={16} /> : <Moon size={16} />}
-      <span>{mode === "dark" ? "Light" : "Dark"}</span>
     </button>
   );
 
@@ -40,7 +40,7 @@ const Navbar = () => {
     <header className="sticky top-0 z-30 border-b border-neutral-800 bg-neutral-950/80 backdrop-blur-md">
       <div className="max-w-screen-2xl mx-auto px-6 lg:px-10 h-14 flex items-center justify-between gap-4">
         <Link to="/" className="flex items-center gap-2 text-white font-semibold text-lg shrink-0">
-          <Sprout size={20} className="text-emerald-500" />
+          <SpinachLogo size={22} withFrame alt="" />
           <span>Spinach</span>
         </Link>
 
@@ -51,7 +51,7 @@ const Navbar = () => {
               Projects
             </NavLink>
             <NavLink to="/chat" className={navLinkClass}>
-              <MessageSquare size={14} />
+              <SpinachLogo size={14} alt="" />
               Spina AI
             </NavLink>
           </nav>
@@ -61,12 +61,7 @@ const Navbar = () => {
           {!user && (
             <>
               {themeToggleButton}
-              <Link to="/login" className="text-neutral-300 hover:text-white duration-300 text-sm sm:text-base">
-                Login
-              </Link>
-              <Link to="/signup" className="text-neutral-300 hover:text-white duration-300 text-sm sm:text-base">
-                Signup
-              </Link>
+            
             </>
           )}
 

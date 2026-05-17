@@ -1,43 +1,84 @@
-# Proxima - A Project Management Website
+# Spinach Client
 
-Proxima is a modern project management website built using the MERN stack, Context API, JWT, and TailwindCSS. With a sleek and intuitive interface, users can easily create, update, and delete their projects. Proxima also features a secure protected route in the frontend, ensuring user data remains safe and secure.
+React frontend for [Spinach](https://spinach.ddns.net/) — project management with an AI assistant (Spina).
 
-## Features
+**Live app:** https://spinach.ddns.net/  
+**Backend repo:** https://github.com/coder-Rit/spinach-server
 
-Proxima comes packed with a variety of useful features, including:
+## Stack
 
-- Simplify project management tasks: Perform tasks such as creating, updating, and deleting projects with ease using the app's user-friendly interface.
-- High-level security: Enjoy peace of mind with the app's highly secure JWT authentication and frontend route protection, which safeguards your data.
-- Personalized project views: Keep your projects confidential by allowing users to view only the projects they have created.
-- User-friendly interface: Enjoy a smooth and intuitive experience with the app's streamlined UI, which makes project management simple and straightforward.
+- React 18 + TypeScript
+- React Router
+- Tailwind CSS
+- Lucide icons
 
-## Tools Used
+## Prerequisites
 
-- **Node.js** - JavaScript runtime environment that runs on the server.
-- **Express** - Fast, minimalist web framework for Node.js.
-- **MongoDB** - NoSQL database that uses a document-oriented data model.
-- **JWT** - JSON Web Tokens for secure authentication and authorization.
-- **React** - JavaScript library for building user interfaces.
-- **Context API** - React's Context API for state management.
-- **Tailwind CSS** - CSS framework that allows for easy customization and rapid development.
+- Node.js 18+
+- npm
+- Spinach API running (see [spinach-server](https://github.com/coder-Rit/spinach-server))
 
-## Installation
+## Setup
 
-1. Clone the client repository using git clone https://github.com/KeyaAkter/proxima-client
-2. Clone the server repository using git clone https://github.com/KeyaAkter/proxima-server
-3. Install the required dependencies by running `npm install `or `npm i` in both the client and server directories.
-4. Create a `.env` file in the root directory of server and add the following variables:
-   - `MONGO_URI`: the MongoDB connection string
-   - `SECRET`: a secret string for JWT authentication
-5. Create a `.env` file in the root directory of client and add the following variable:
+1. Clone the repository:
 
-- `REACT_APP_BASE_URL`: for example http://localhost:4000
+   ```bash
+   git clone https://github.com/coder-Rit/spinach-client.git
+   cd spinach-client
+   ```
 
-6. Start the backend server by running `npm start`.
-7. Start the backend server by running `npm start`.
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Create a `.env` file in the project root:
+
+   ```env
+   REACT_APP_API_BASE_URL=http://localhost:9000
+   REACT_APP_SITE_URL=https://spinach.ddns.net
+   ```
+
+   - `REACT_APP_API_BASE_URL` — backend API URL (include `/api/v1` only if your client expects it; this project uses the base host and paths like `/api/v1/...` in services).
+   - `REACT_APP_SITE_URL` — public site URL for SEO (canonical, Open Graph, sitemap).
+
+4. Start the development server:
+
+   ```bash
+   npm start
+   ```
+
+   Open http://localhost:3000
+
+## Production build
+
+```bash
+npm run build
+```
+
+The `prebuild` step generates `sitemap.xml` and `robots.txt` from `REACT_APP_SITE_URL`.
+
+Serve the `build/` folder with any static host (Netlify, nginx, etc.).
+
+## Demo account
+
+On startup the backend seeds a default user (if missing):
+
+- **Email:** `john.doe@spinach.ddns.net`
+- **Password:** `johndoe123`
+
+Use **Continue as John Doe** on the home or login page.
+
+## Project structure
+
+- `src/pages/` — routes (Home, Chat, Login, projects)
+- `src/components/` — UI including `SpinachLogo` (shared favicon branding)
+- `src/config/site.ts` — SEO and GitHub links
+- `public/` — favicon, manifest, static SEO assets
 
 ## Links
 
-- [Live Demo](https://proxima-project.netlify.app/)
-- [Front-End Repository](https://github.com/KeyaAkter/proxima-client)
-- [Back-End Repository](https://github.com/KeyaAkter/proxima-server)
+- [Live app](https://spinach.ddns.net/)
+- [Frontend (this repo)](https://github.com/coder-Rit/spinach-client)
+- [Backend](https://github.com/coder-Rit/spinach-server)

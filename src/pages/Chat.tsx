@@ -1,5 +1,6 @@
 import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Loader2, MessageSquare, Plus, Send, Folder, FolderOpen, FolderLock, ChevronDown, X } from "lucide-react";
+import SpinachLogo from "../components/SpinachLogo";
 import { useAuthContext } from "../hooks/useAuthContext";
 import {
   getChatMessages,
@@ -371,13 +372,11 @@ const Chat = () => {
               {emptyState ? (
                 <div className="flex-1 flex flex-col items-center justify-center text-center gap-8 py-6">
                   <div className="flex flex-col items-center gap-4">
-                    <img
-                      src="/images/spinach.png"
-                      alt="Spinach"
-                      className="w-20 h-20 rounded-full border border-neutral-600 shadow-lg shadow-black/30"
-                    />
+                    <SpinachLogo size={56} withFrame className="shadow-lg shadow-black/30" />
                     <div>
-                      <h1 className="text-3xl font-medium text-white">Spina</h1>
+                      <h1 className="text-3xl font-medium text-white flex items-center justify-center gap-2">
+                        Spina
+                      </h1>
                       <p className="mt-2 text-neutral-400 text-sm max-w-md mx-auto">
                         Spina is your Spinach assistant: short, clear answers grounded in your workspace
                         context, friendly for quick questions, and tuned for simple explanations.
@@ -390,8 +389,11 @@ const Chat = () => {
                   {messages.filter((msg) => !(msg.role === "AI" && !msg.content && loading)).map((msg) => (
                     <div
                       key={msg.id}
-                      className={`flex w-full ${msg.role === "USER" ? "justify-end" : "justify-start"}`}
+                      className={`flex w-full gap-2.5 ${msg.role === "USER" ? "justify-end" : "justify-start"}`}
                     >
+                      {msg.role === "AI" && (
+                        <SpinachLogo size={28} withFrame alt="" className="mt-1" />
+                      )}
                       <div
                         className={`max-w-[min(100%,36rem)] rounded-2xl px-4 py-3 text-[15px] leading-relaxed ${msg.role === "USER"
                           ? "bg-neutral-800 text-neutral-100 border border-neutral-600"
@@ -404,7 +406,8 @@ const Chat = () => {
                   ))}
 
                   {(loadingMessages || (loading && !isStreaming)) && (
-                    <div className="flex justify-start">
+                    <div className="flex justify-start gap-2.5">
+                      <SpinachLogo size={28} withFrame alt="" className="mt-1" />
                       <div className="inline-flex items-center gap-2 rounded-2xl border border-neutral-700 bg-neutral-900/80 px-4 py-3 text-neutral-400 text-sm">
                         <Loader2 className="animate-spin" size={18} aria-hidden />
                         <span>Spina is thinking…</span>

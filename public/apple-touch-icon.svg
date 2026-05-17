@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-label="Spinach">
+  <rect width="180" height="180" rx="40" fill="#0a0a0a"/>
+  <path
+    d="M90 152c-25-20-39-41-39-65 0-22 14-40 39-40s39 18 39 40c0 24-14 45-39 65z"
+    fill="#10b981"
+  />
+  <path
+    d="M90 47c-11 22-11 42 0 65M90 47c11 22 11 42 0 65"
+    stroke="#34d399"
+    stroke-width="8"
+    stroke-linecap="round"
+    fill="none"
+  />
+  <path
+    d="M90 104v48"
+    stroke="#6ee7b7"
+    stroke-width="8"
+    stroke-linecap="round"
+  />
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Spinach">
+  <rect width="32" height="32" rx="7" fill="#0a0a0a"/>
+  <path
+    d="M16 27c-4.5-3.5-7-7.2-7-11.5C9 10.5 12 7 16 7c4 0 7 3.5 7 8.5 0 4.3-2.5 8-7 11.5z"
+    fill="#10b981"
+  />
+  <path
+    d="M16 7c-2 4-2 7.5 0 11.5M16 7c2 4 2 7.5 0 11.5"
+    stroke="#34d399"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    fill="none"
+  />
+  <path
+    d="M16 18.5V27"
+    stroke="#6ee7b7"
+    stroke-width="1.5"
+    stroke-linecap="round"
+  />
+</svg>

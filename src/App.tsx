@@ -1,8 +1,9 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
+import Seo from "./components/Seo";
 import Chat from "./pages/Chat";
-import Home from "./pages/Home";
+import Home, { GuestHome } from "./pages/Home";
 import Login from "./pages/Login";
 import ProjectView from "./pages/ProjectView";
 import Signup from "./pages/Signup";
@@ -13,9 +14,10 @@ function App() {
 
   return (
     <div className="app bg-neutral-950 text-neutral-100 min-h-screen">
+      <Seo />
       <Navbar />
       <Routes>
-        <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
+        <Route path="/" element={user ? <Home /> : <GuestHome />} />
         <Route path="/chat" element={user ? <Chat /> : <Navigate to="/login" />} />
         <Route path="/projects" element={user ? <ProjectView /> : <Navigate to="/login" />} />
         <Route path="/projects/:projectId" element={user ? <ProjectView /> : <Navigate to="/login" />} />

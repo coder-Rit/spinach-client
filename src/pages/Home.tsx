@@ -1,5 +1,13 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import DemoUserLoginButton from "../components/DemoUserLoginButton";
+import SpinachLogo from "../components/SpinachLogo";
+import {
+  GITHUB_CLIENT_URL,
+  GITHUB_SERVER_URL,
+  LIVE_APP_URL,
+  SITE_NAME,
+} from "../config/site";
 import {
   PlusCircle,
   Search,
@@ -11,6 +19,8 @@ import {
   LayoutGrid,
   List,
   X,
+  Code2,
+  ExternalLink,
 } from "lucide-react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { createProject, listProjects } from "../services/projectsService";
@@ -18,26 +28,40 @@ import { Project } from "../types/project";
 
 const StatusTag = ({ isOpen }: { isOpen: boolean }) => (
   <span
-    className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium border ${isOpen
-      ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
-      : "bg-neutral-700/50 text-neutral-400 border-neutral-600/50"
-      }`}
+    className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium border ${
+      isOpen
+        ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+        : "bg-neutral-700/50 text-neutral-400 border-neutral-600/50"
+    }`}
   >
     {isOpen ? <FolderOpen size={10} /> : <FolderLock size={10} />}
     {isOpen ? "Open" : "Closed"}
   </span>
 );
 
-const ReadMore = ({ text, maxLength = 120 }: { text: string; maxLength?: number }) => {
+const ReadMore = ({
+  text,
+  maxLength = 120,
+}: {
+  text: string;
+  maxLength?: number;
+}) => {
   const [expanded, setExpanded] = useState(false);
-  if (!text) return <span className="text-neutral-500 italic text-sm">No description</span>;
-  if (text.length <= maxLength) return <span className="text-neutral-400 text-sm">{text}</span>;
+  if (!text)
+    return (
+      <span className="text-neutral-500 italic text-sm">No description</span>
+    );
+  if (text.length <= maxLength)
+    return <span className="text-neutral-400 text-sm">{text}</span>;
 
   return (
     <span className="text-neutral-400 text-sm">
       {expanded ? text : `${text.slice(0, maxLength)}…`}
       <button
-        onClick={(e) => { e.preventDefault(); setExpanded((v) => !v); }}
+        onClick={(e) => {
+          e.preventDefault();
+          setExpanded((v) => !v);
+        }}
         className="ml-1 text-emerald-500 hover:text-emerald-400 text-xs font-medium"
       >
         {expanded ? "less" : "more"}
@@ -55,7 +79,9 @@ const ProjectCard = ({ project }: { project: Project }) => {
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-2 min-w-0">
-          <div className={`shrink-0 p-2 rounded-lg ${isOpen ? "bg-emerald-500/10" : "bg-neutral-700/40"}`}>
+          <div
+            className={`shrink-0 p-2 rounded-lg ${isOpen ? "bg-emerald-500/10" : "bg-neutral-700/40"}`}
+          >
             {isOpen ? (
               <FolderOpen size={16} className="text-emerald-400" />
             ) : (
@@ -68,7 +94,10 @@ const ProjectCard = ({ project }: { project: Project }) => {
         </div>
         <div className="flex items-center gap-2 shrink-0">
           <StatusTag isOpen={isOpen} />
-          <ChevronRight size={14} className="text-neutral-600 group-hover:text-neutral-400 group-hover:translate-x-0.5 transition-all duration-200" />
+          <ChevronRight
+            size={14}
+            className="text-neutral-600 group-hover:text-neutral-400 group-hover:translate-x-0.5 transition-all duration-200"
+          />
         </div>
       </div>
 
@@ -83,7 +112,9 @@ const ProjectCard = ({ project }: { project: Project }) => {
             Manager assigned
           </span>
         )}
-        <span className="ml-auto text-neutral-600 text-xs font-mono">{project.projectId.slice(0, 8)}…</span>
+        <span className="ml-auto text-neutral-600 text-xs font-mono">
+          {project.projectId.slice(0, 8)}…
+        </span>
       </div>
     </Link>
   );
@@ -96,7 +127,9 @@ const ProjectRow = ({ project }: { project: Project }) => {
       to={`/projects/${project.projectId}`}
       className="group flex items-center gap-4 bg-neutral-900 border border-neutral-800 rounded-xl px-5 py-4 hover:border-neutral-600 hover:bg-neutral-800/60 transition-all duration-200"
     >
-      <div className={`shrink-0 p-2 rounded-lg ${isOpen ? "bg-emerald-500/10" : "bg-neutral-700/40"}`}>
+      <div
+        className={`shrink-0 p-2 rounded-lg ${isOpen ? "bg-emerald-500/10" : "bg-neutral-700/40"}`}
+      >
         {isOpen ? (
           <FolderOpen size={15} className="text-emerald-400" />
         ) : (
@@ -111,7 +144,10 @@ const ProjectRow = ({ project }: { project: Project }) => {
       </div>
       <div className="shrink-0 flex items-center gap-3">
         <StatusTag isOpen={isOpen} />
-        <ChevronRight size={14} className="text-neutral-600 group-hover:text-neutral-400 group-hover:translate-x-0.5 transition-all duration-200" />
+        <ChevronRight
+          size={14}
+          className="text-neutral-600 group-hover:text-neutral-400 group-hover:translate-x-0.5 transition-all duration-200"
+        />
       </div>
     </Link>
   );
@@ -128,7 +164,9 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState<"" | "OPEN" | "CLOSE">("OPEN");
+  const [statusFilter, setStatusFilter] = useState<"" | "OPEN" | "CLOSE">(
+    "OPEN",
+  );
   const [viewMode, setViewMode] = useState<ViewMode>("list");
 
   const [isCreateOpen, setIsCreateOpen] = useState(false);
@@ -160,7 +198,9 @@ const Home = () => {
       setProjects((prev) => [created, ...prev]);
       setIsCreateOpen(false);
     } catch (err) {
-      setCreateError(err instanceof Error ? err.message : "Unable to create project");
+      setCreateError(
+        err instanceof Error ? err.message : "Unable to create project",
+      );
     } finally {
       setCreating(false);
     }
@@ -186,7 +226,10 @@ const Home = () => {
   const filtered = useMemo(() => {
     const q = search.toLowerCase().trim();
     return projects.filter((p) => {
-      const matchSearch = !q || p.title.toLowerCase().includes(q) || (p.description ?? "").toLowerCase().includes(q);
+      const matchSearch =
+        !q ||
+        p.title.toLowerCase().includes(q) ||
+        (p.description ?? "").toLowerCase().includes(q);
       const matchStatus = !statusFilter || p.status === statusFilter;
       return matchSearch && matchStatus;
     });
@@ -202,7 +245,9 @@ const Home = () => {
         <div>
           <h1 className="text-3xl font-semibold text-white">Projects</h1>
           <p className="mt-1 text-neutral-400 text-sm">
-            {loading ? "Loading…" : `${projects.length} project${projects.length !== 1 ? "s" : ""} — ${openCount} open, ${closedCount} closed`}
+            {loading
+              ? "Loading…"
+              : `${projects.length} project${projects.length !== 1 ? "s" : ""} — ${openCount} open, ${closedCount} closed`}
           </p>
         </div>
         <button
@@ -234,7 +279,10 @@ const Home = () => {
       {/* Filters */}
       <div className="flex flex-wrap items-center gap-3 mb-6">
         <div className="relative flex-1 min-w-[200px] max-w-sm">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" />
+          <Search
+            size={14}
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500"
+          />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -247,10 +295,11 @@ const Home = () => {
             <button
               key={s}
               onClick={() => setStatusFilter(s)}
-              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150 ${statusFilter === s
-                ? "bg-emerald-600 text-white"
-                : "text-neutral-400 hover:text-white hover:bg-neutral-800"
-                }`}
+              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150 ${
+                statusFilter === s
+                  ? "bg-emerald-600 text-white"
+                  : "text-neutral-400 hover:text-white hover:bg-neutral-800"
+              }`}
             >
               {s === "" ? "All" : s === "OPEN" ? "Open" : "Closed"}
             </button>
@@ -283,9 +332,18 @@ const Home = () => {
 
       {/* Loading skeleton */}
       {loading && (
-        <div className={viewMode === "grid" ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" : "flex flex-col gap-3"}>
+        <div
+          className={
+            viewMode === "grid"
+              ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+              : "flex flex-col gap-3"
+          }
+        >
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="bg-neutral-900 border border-neutral-800 rounded-xl p-5 animate-pulse">
+            <div
+              key={i}
+              className="bg-neutral-900 border border-neutral-800 rounded-xl p-5 animate-pulse"
+            >
               <div className="h-4 bg-neutral-800 rounded w-3/4 mb-3" />
               <div className="h-3 bg-neutral-800 rounded w-full mb-1.5" />
               <div className="h-3 bg-neutral-800 rounded w-1/2" />
@@ -302,7 +360,9 @@ const Home = () => {
           </div>
           <p className="text-neutral-300 font-medium">No projects found</p>
           <p className="text-neutral-500 text-sm mt-1">
-            {search || statusFilter ? "Try adjusting your filters" : "Create your first project to get started"}
+            {search || statusFilter
+              ? "Try adjusting your filters"
+              : "Create your first project to get started"}
           </p>
           {!search && !statusFilter && (
             <button
@@ -318,8 +378,9 @@ const Home = () => {
       )}
 
       {/* Projects grid/list */}
-      {!loading && filtered.length > 0 && (
-        viewMode === "grid" ? (
+      {!loading &&
+        filtered.length > 0 &&
+        (viewMode === "grid" ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {filtered.map((project) => (
               <ProjectCard key={project.projectId} project={project} />
@@ -331,8 +392,7 @@ const Home = () => {
               <ProjectRow key={project.projectId} project={project} />
             ))}
           </div>
-        )
-      )}
+        ))}
       {/* Backdrop */}
       {isCreateOpen && (
         <div
@@ -397,12 +457,13 @@ const Home = () => {
                     key={s}
                     type="button"
                     onClick={() => setFormStatus(s)}
-                    className={`flex-1 py-2.5 rounded-lg border text-sm font-medium duration-150 ${formStatus === s
+                    className={`flex-1 py-2.5 rounded-lg border text-sm font-medium duration-150 ${
+                      formStatus === s
                         ? s === "OPEN"
                           ? "bg-emerald-600/20 border-emerald-600/40 text-emerald-300"
                           : "bg-neutral-700 border-neutral-600 text-neutral-200"
                         : "bg-neutral-900/40 border-neutral-700 text-neutral-500 hover:border-neutral-600"
-                      }`}
+                    }`}
                   >
                     {s === "OPEN" ? "Open" : "Closed"}
                   </button>
@@ -432,5 +493,70 @@ const Home = () => {
     </div>
   );
 };
+
+export const GuestHome = () => (
+  <div className="flex flex-col items-center justify-center min-h-[calc(100vh-8rem)] px-6 text-center gap-8">
+    <div className="flex flex-col items-center gap-4">
+      <SpinachLogo size={64} withFrame className="shadow-lg shadow-black/30" />
+      <div>
+      <h1 className="text-4xl font-semibold text-white">{SITE_NAME}</h1>
+      <p className="mt-3 text-neutral-400 max-w-md">
+        Project management with AI assistance. Sign in or try the demo account.
+      </p>
+      </div>
+    </div>
+
+    <DemoUserLoginButton showError />
+
+    <div className="flex items-center gap-4 text-sm">
+      <Link
+        to="/login"
+        className="text-emerald-500 hover:text-emerald-400 font-medium"
+      >
+        Log in
+      </Link>
+      <span className="text-neutral-600">·</span>
+      <Link
+        to="/signup"
+        className="text-neutral-300 hover:text-white font-medium"
+      >
+        Sign up
+      </Link>
+    </div>
+
+    <div className="flex flex-col items-center gap-3 pt-2 border-t border-neutral-800 w-full max-w-sm">
+      <p className="text-xs uppercase tracking-wide text-neutral-500">Open source</p>
+      <div className="flex flex-col sm:flex-row gap-2 w-full">
+        <a
+          href={GITHUB_CLIENT_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center gap-2 flex-1 px-4 py-2.5 rounded-xl border border-neutral-700 bg-neutral-900 text-sm text-neutral-200 hover:border-emerald-600/50 hover:bg-neutral-800 duration-200"
+        >
+          <Code2 size={16} />
+          Frontend
+        </a>
+        <a
+          href={GITHUB_SERVER_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center gap-2 flex-1 px-4 py-2.5 rounded-xl border border-neutral-700 bg-neutral-900 text-sm text-neutral-200 hover:border-emerald-600/50 hover:bg-neutral-800 duration-200"
+        >
+          <Code2 size={16} />
+          Backend
+        </a>
+      </div>
+      <a
+        href={LIVE_APP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-1.5 text-xs text-neutral-500 hover:text-emerald-400 duration-200"
+      >
+        <ExternalLink size={12} />
+        {LIVE_APP_URL.replace(/^https?:\/\//, "")}
+      </a>
+    </div>
+  </div>
+);
 
 export default Home;
